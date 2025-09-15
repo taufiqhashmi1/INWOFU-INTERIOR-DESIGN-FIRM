@@ -1,0 +1,21 @@
+# Virtual Environment
+venv/
+env/
+
+# Django files
+*.pyc
+__pycache__/
+db.sqlite3
+
+# User-uploaded media files
+/media/
+
+# Static files (if you collect them)
+/static/
+
+# IDE folders
+.vscode/
+.idea/
+
+# Secret files (if you use a .env file)
+.env

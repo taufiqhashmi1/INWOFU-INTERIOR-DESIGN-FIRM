@@ -1,0 +1,547 @@
+{% extends "base.html" %} 
+{% load static %} 
+{% block title %} Welcome | INWOFU
+{% endblock title %}
+{% block extra_head %}
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Playfair:ital,opsz,wght@0,5..1200,300..900;1,5..1200,300..900&display=swap"
+  rel="stylesheet"
+/>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+/>
+
+<style>
+  /* Your CSS styles remain the same... */
+  body,
+  html {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: sans-serif;
+    background: #fff;
+  }
+  #intro-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background-color: #fff;
+    transition: opacity 4s ease-in-out;
+    opacity: 1;
+  }
+  #webgl-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+  #intro-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    text-align: center;
+    font-size: 3rem;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+    color: white;
+  }
+  #intro-text span {
+    display: inline-block;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 1s ease-out, transform 1s ease-out;
+  }
+  h1,h2,h3,h4,h5,h6 {
+    font-family: "Playfair", serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+  }
+  .swiper-pagination.custom-pagination {
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    width: 100%;
+    z-index: 10;
+    opacity: 0;
+    animation: fadeIn 0.5s ease-in forwards;
+    animation-delay: 0.6s;
+  }
+  .swiper-pagination-bullet {
+    background: #78350f;
+    opacity: 0.5;
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    transition: opacity 0.3s;
+  }
+  .swiper-pagination-bullet-active {
+    opacity: 1;
+    background: #78350f;
+  }
+  .swiper-slide {
+    transition: transform 0.3s ease;
+  }
+  .swiper-slide:hover {
+    transform: scale(1.05);
+  }
+  .mySwiper {
+    height: auto !important;
+    padding-bottom: 60px;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  .fade-in {
+    opacity: 0;
+    animation: fadeIn 1.5s forwards ease-in-out;
+  }
+  .slide-up {
+    opacity: 0;
+    transform: translateY(40px);
+    animation: slideUp 1.3s forwards ease-out;
+  }
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes slideUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+{% endblock extra_head %} {% block content %}
+
+<div id="intro-container">
+  <div id="webgl-container"></div>
+  <div id="intro-text">
+    <span class="animated-char">I</span><span class="animated-char">N</span
+    ><span class="animated-char">W</span><span class="animated-char">O</span
+    ><span class="animated-char">F</span><span class="animated-char">U</span>
+  </div>
+</div>
+
+<section
+  id="home"
+  class="relative h-90 md:h-screen bg-cover bg-center m-0 p-0"
+  style="background-image: url('{% static 'images/hero.jpg' %}')"
+>
+  <div class="absolute inset-0 bg-opacity-40 flex items-center justify-center">
+    <div class="text-center text-white px-4 pb-45">
+      <h1
+        class="text-5xl md:text-7xl font-bold mb-2 md:mb-4 slide-up"
+        style="animation-delay: 0.3s"
+      >
+        Design Your Dream
+      </h1>
+      <p
+        class="text-xl md:text-2xl mb-6 slide-up"
+        style="animation-delay: 0.6s"
+      >
+        Luxury, Function, and Timeless Beauty
+      </p>
+      <a
+        href="#projects"
+        class="inline-block bg-gray-400 text-[#1C1F4A] font-semibold px-6 py-3 rounded-full hover:bg-yellow-900 hover:text-white transition duration-300 slide-up"
+        style="animation-delay: 0.9s"
+        >View Projects</a
+      >
+    </div>
+  </div>
+</section>
+
+<section class="pb-12 pt-25 bg-white">
+  <div class="max-w-7xl mx-auto px-4">
+    <h2 class="text-5xl font-bold mb-8 text-center">
+      Why Choose <span class="text-yellow-900">Us?</span>
+    </h2>
+    <div class="overflow-hidden relative">
+      <div
+        id="carouselTrack"
+        class="flex gap-8 w-max animate-slide whitespace-nowrap"
+      >
+        <div class="min-w-[160px] text-center">
+          <img class="h-20 md:h-30 mx-auto" src="{% static "images/badge.png" %}"
+          alt="badge" />
+          <p class="mt-2 text-sm font-medium">10 Year Product Warranty</p>
+        </div>
+        <div class="min-w-[160px] text-center">
+          <img class="h-20 md:h-30 mx-auto" src="{% static "images/designer.png" %}"
+          alt="designer" />
+          <p class="mt-2 text-sm font-medium">300+ In House Designers</p>
+        </div>
+        <div class="min-w-[160px] text-center">
+          <img class="h-20 md:h-30 mx-auto" src="{% static "images/home.png" %}"
+          alt="home" />
+          <p class="mt-2 text-sm font-medium">8000 Homes Delivered</p>
+        </div>
+        <div class="min-w-[160px] text-center">
+          <img class="h-20 md:h-30 mx-auto" src="{% static "images/12-years.png" %}"
+          alt="12 years" />
+          <p class="mt-2 text-sm font-medium">12+ Years Of Expertise</p>
+        </div>
+        <div class="min-w-[160px] text-center">
+          <img class="h-20 md:h-30 mx-auto" src="{% static "images/furniture.png" %}"
+          alt="interior" />
+          <p class="mt-2 text-sm font-medium">Personalised Interiors</p>
+        </div>
+        <div class="min-w-[160px] text-center">
+          <img class="h-20 md:h-30 mx-auto" src="{% static "images/iso.png" %}"
+          alt="iso" />
+          <p class="mt-2 text-sm font-medium">ISO Certified Processes</p>
+        </div>
+        <div class="min-w-[160px] text-center">
+          <img class="h-20 md:h-30 mx-auto" src="{% static "images/quality-control.png"%}" alt="quality check" />
+          <p class="mt-2 text-sm font-medium">7 Stage Quality Check</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects" class="py-20 m-1.5 bg-white">
+  <div class="text-center pb-12">
+    <h2 class="text-5xl font-bold text-yellow-900">Our Projects</h2>
+    <p class="text-gray-600 mt-2">Spaces that speak elegance</p>
+  </div>
+  <div class="swiper mySwiper max-w-6xl mx-auto px-4">
+    <div class="swiper-wrapper">
+      {% for project in projects %}
+      <div class="swiper-slide">
+        <a href="{{ project.get_absolute_url }}">
+          <div class="overflow-hidden rounded-xl shadow-lg">
+            {% if project.thumbnail %}
+            <img
+              src="{{ project.thumbnail.url }}"
+              alt="{{ project.title }}"
+              class="w-full md:h-80 h-40 object-cover"
+            />
+            {% else %}
+            <img
+              src="{% static 'images/home.png' %}"
+              alt="{{ project.title }}"
+              class="w-full md:h-80 h-40 object-cover"
+            />
+            {% endif %}
+            <div class="p-4 bg-white">
+              <h3 class="font-bold text-lg text-yellow-900">
+                {{ project.title }}
+              </h3>
+              <p class="text-sm text-gray-600 mt-1">
+                {{ project.short_description }}
+              </p>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="swiper-pagination mt-8"></div>
+  </div>
+</section>
+
+<section id="about" class="py-20 bg-[#F8F5F2]">
+  <div class="max-w-6xl mx-auto px-4">
+    <div class="text-center mb-12">
+      <h2 class="text-5xl font-bold text-yellow-900 fade-in">About Us</h2>
+      <p class="text-gray-600 mt-2 fade-in">
+        Who we are and what we believe in
+      </p>
+    </div>
+    <div class="grid md:grid-cols-2 gap-10 items-center">
+      <div class="fade-in" style="animation-delay: 0.3s">
+        <img
+          src="{% static 'images/logo.jpg' %}"
+          alt="About RoyalDesigns"
+          class="rounded-xl shadow-md w-full h-auto object-cover"
+        />
+      </div>
+      <div class="fade-in" style="animation-delay: 0.5s">
+        <h3 class="text-3xl font-semibold text-[#1C1F4A] mb-4">
+          Crafting spaces that reflect you
+        </h3>
+        <p class="text-gray-700 leading-relaxed mb-4">
+          RoyalDesigns is a boutique interior design studio committed to
+          transforming everyday spaces into stunning experiences. With a team of
+          passionate designers and architects, we specialize in delivering
+          luxury interiors that balance form and function.
+        </p>
+        <p class="text-gray-700 leading-relaxed mb-4">
+          From private homes to commercial hubs, we bring a personal touch to
+          every project. Our approach blends modern aesthetics with timeless
+          elegance, always tailored to meet your unique style and needs.
+        </p>
+        <p class="text-gray-700 leading-relaxed">
+          At RoyalDesigns, we believe design should inspire. Let us help you
+          turn your vision into reality.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services" class="py-20 bg-[#F8F5F2]">
+  <div class="text-center mb-12 fade-in-up" style="animation-delay: 1.6s">
+    <h2 class="text-5xl font-bold text-yellow-900">Our Services</h2>
+    <p class="text-lg text-gray-600 mt-2">
+      Crafting every corner with excellence
+    </p>
+  </div>
+  <div class="grid md:grid-cols-3 gap-8 px-4 max-w-6xl mx-auto">
+    <div
+      class="bg-white rounded-xl shadow-md p-6 transform transition duration-300 hover:-translate-y-2 hover:shadow-xl fade-in-up"
+      style="animation-delay: 1.8s"
+    >
+      <img
+        src="{% static 'images/ResidentialDesign.jpg' %}"
+        alt="Residential Design"
+        class="w-full h-40 object-cover rounded-md mb-4"
+      />
+      <h3 class="text-2xl font-semibold text-[#1C1F4A] mb-2">
+        Residential Design
+      </h3>
+      <p class="text-gray-600">
+        Stylish and cozy interiors for homes of all sizes.
+      </p>
+    </div>
+    <div
+      class="bg-white rounded-xl shadow-md p-6 transform transition duration-300 hover:-translate-y-2 hover:shadow-xl fade-in-up"
+      style="animation-delay: 2s"
+    >
+      <img
+        src="{% static 'images/CommercialSpaces.jpg' %}"
+        alt="Commercial Spaces"
+        class="w-full h-40 object-cover rounded-md mb-4"
+      />
+      <h3 class="text-2xl font-semibold text-[#1C1F4A] mb-2">
+        Commercial Spaces
+      </h3>
+      <p class="text-gray-600">
+        Functional and modern workspaces tailored to your brand.
+      </p>
+    </div>
+    <div
+      class="bg-white rounded-xl shadow-md p-6 transform transition duration-300 hover:-translate-y-2 hover:shadow-xl fade-in-up"
+      style="animation-delay: 2.2s"
+    >
+      <img
+        src="{% static 'images/RenovationConsulting.jpg' %}"
+        alt="Renovation Consulting"
+        class="w-full h-40 object-cover rounded-md mb-4"
+      />
+      <h3 class="text-2xl font-semibold text-[#1C1F4A] mb-2">
+        Renovation Consulting
+      </h3>
+      <p class="text-gray-600">
+        Expert guidance to breathe new life into your spaces.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="py-20 bg-[#F8F5F2]">
+  <div class="text-center mb-12">
+    <h2 class="text-5xl font-bold text-yellow-900 fade-in">
+      What Our Clients Say
+    </h2>
+    <p class="text-gray-600 mt-2 fade-in">
+      Hear from those who transformed their space with us
+    </p>
+  </div>
+  <div
+    class="max-w-4xl mx-auto px-4 grid gap-8 md:grid-cols-2 fade-in"
+    style="animation-delay: 0.4s"
+  >
+    <div class="bg-white p-6 rounded-xl shadow-lg">
+      <p class="text-gray-700 italic">
+        "INWOFU gave my home the royal touch! Their attention to detail is
+        impeccable."
+      </p>
+      <p class="mt-4 text-sm font-semibold text-yellow-900">— Priya Malhotra</p>
+    </div>
+    <div class="bg-white p-6 rounded-xl shadow-lg">
+      <p class="text-gray-700 italic">
+        "Our office now reflects both professionalism and creativity. Truly
+        outstanding service!"
+      </p>
+      <p class="mt-4 text-sm font-semibold text-yellow-900">— Arjun Verma</p>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="py-20 bg-white">
+  <div class="text-center mb-12">
+    <h2 class="text-5xl font-bold text-yellow-900 fade-in">Contact Us</h2>
+    <p class="text-gray-600 mt-2 fade-in">We’d love to hear from you</p>
+  </div>
+  <div class="max-w-3xl mx-auto px-4">
+    <form method="post" class="bg-[#F8F5F2] p-8 rounded-xl shadow-md">
+      {% csrf_token %} {{ form.non_field_errors }}
+      <div class="mb-4">
+        {{ form.name.label_tag }} {{ form.name }} {{ form.name.errors }}
+      </div>
+      <div class="mb-4">
+        {{ form.email.label_tag }} {{ form.email }} {{ form.email.errors }}
+      </div>
+      <div class="mb-4">{{ form.message.label_tag }} {{ form.message }}</div>
+      <button
+        type="submit"
+        class="bg-yellow-900 text-white px-6 py-2 rounded-md hover:bg-yellow-800 transition"
+      >
+        Send Message
+      </button>
+      {% if messages %} {% for message in messages %}
+      <div class="bg-green-100 text-green-800 p-4 rounded mb-4">
+        {{ message }}
+      </div>
+      {% endfor %} {% endif %}
+    </form>
+  </div>
+</section>
+
+{% endblock content %}
+
+{% block extra_scripts %}
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const introContainer = document.getElementById("intro-container");
+    
+    // Function to initialize the Swiper Carousel
+    function initSwiper() {
+      new Swiper(".mySwiper", {
+        autoplay: {
+          delay: 2500, // Time in milliseconds between slides (2.5 seconds)
+          disableOnInteraction: false, // Autoplay will restart after user interaction
+        },
+        slidesPerView: 1,
+        spaceBetween: 30,
+        loop: true,
+        pagination: {
+          el: ".swiper-pagination",
+          clickable: true,
+        },
+        breakpoints: {
+          768: { slidesPerView: 2 },
+          1024: { slidesPerView: 3 },
+        },
+      });
+    }
+
+    if (introContainer) {
+      let scene, camera, renderer, sphereMesh;
+      const introText = document.getElementById("intro-text");
+      const webglContainer = document.getElementById("webgl-container");
+
+      function init() {
+        scene = new THREE.Scene();
+        camera = new THREE.PerspectiveCamera(75,window.innerWidth / window.innerHeight,0.1,1000);
+        camera.position.z = 2.5;
+        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        if (webglContainer) webglContainer.appendChild(renderer.domElement);
+        renderer.setClearColor(0xffffff, 1);
+        const light = new THREE.DirectionalLight(0xffffff, 1);
+        light.position.set(0, 0, 5);
+        scene.add(light);
+        const geometry = new THREE.SphereGeometry(1, 64, 64);
+        const vertexShader = `varying vec3 vNormal; varying vec3 vViewDirection; void main() { vNormal = normalize(normalMatrix * normal); vec4 mvPosition = modelViewMatrix * vec4(position, 1.0); vViewDirection = normalize(-mvPosition.xyz); gl_Position = projectionMatrix * mvPosition; }`;
+        const fragmentShader = `varying vec3 vNormal; varying vec3 vViewDirection; uniform float uTime; void main() { float viewCos = 1.0 - abs(dot(vNormal, vViewDirection)); float rippleEffect = sin(uTime * 5.0 + viewCos * 50.0) * 0.5 + 0.5; float edgeStrength = smoothstep(0.0, 0.5, viewCos); float rippleMix = rippleEffect * edgeStrength; vec3 baseColor = vec3(0.47, 0.21, 0.06); vec3 rippleColor = vec3(0.57, 0.25, 0.05); vec3 finalColor = mix(baseColor, rippleColor, rippleMix); gl_FragColor = vec4(finalColor, 1.0); }`;
+        const material = new THREE.ShaderMaterial({
+          uniforms: { uTime: { value: 0.0 } },
+          vertexShader: vertexShader,
+          fragmentShader: fragmentShader,
+        });
+        sphereMesh = new THREE.Mesh(geometry, material);
+        scene.add(sphereMesh);
+        window.addEventListener("resize", onWindowResize, false);
+      }
+      function onWindowResize() {
+        if (!camera || !renderer) return;
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      }
+      function animate(time) {
+        requestAnimationFrame(animate);
+        if (sphereMesh && sphereMesh.material.uniforms) {
+          sphereMesh.rotation.x += 0.005;
+          sphereMesh.rotation.y += 0.005;
+          sphereMesh.material.uniforms.uTime.value = time * 0.001;
+        }
+        if (renderer && scene && camera) renderer.render(scene, camera);
+      }
+      function startIntro() {
+        if (introText) {
+          introText.style.opacity = 1;
+          const chars = document.querySelectorAll(".animated-char");
+          chars.forEach((char, index) => {
+            setTimeout(() => {
+              char.style.opacity = 1;
+              char.style.transform = "scale(1)";
+            }, index * 100);
+          });
+        }
+        animate();
+        setTimeout(() => {
+          if (introContainer) introContainer.style.opacity = 0;
+        }, 4000);
+      }
+      init();
+      startIntro();
+      introContainer.addEventListener("transitionend", () => {
+        if (introContainer.style.opacity == 0) {
+          introContainer.style.display = "none";
+          document.body.style.overflow = "auto";
+          document.documentElement.style.overflow = "auto";
+          // Initialize Swiper ONLY after the intro is finished
+          initSwiper();
+        }
+      });
+    } else {
+      document.body.style.overflow = "auto";
+      document.documentElement.style.overflow = "auto";
+      // Initialize Swiper immediately if there is no intro
+      initSwiper();
+    }
+
+    // "Why Choose Us" Marquee Logic
+    const carouselTrack = document.getElementById("carouselTrack");
+    if (carouselTrack) {
+      const speed = 0.5;
+      const children = Array.from(carouselTrack.children);
+      children.forEach((child) =>
+        carouselTrack.appendChild(child.cloneNode(true))
+      );
+      let scrollPosition = 0;
+      function animateCarousel() {
+        scrollPosition += speed;
+        if (scrollPosition >= carouselTrack.scrollWidth / 2) {
+          scrollPosition = 0;
+        }
+        carouselTrack.style.transform = `translateX(-${scrollPosition}px)`;
+        requestAnimationFrame(animateCarousel);
+      }
+      requestAnimationFrame(animateCarousel);
+    }
+  });
+</script>
+{% endblock extra_scripts %}

@@ -1,0 +1,66 @@
+{% extends "base.html" %} {% load static %} {% block title %}{{ project.title }}
+| INWOFU{% endblock title %} {% block content %}
+
+<section
+  class="relative h-[50vh] bg-cover bg-center"
+  style="background-image: url('{% if project.thumbnail %}{{ project.thumbnail.url }}{% else %}{% static 'images/logo.jpg' %}{% endif %}');"
+>
+  <div class="absolute inset-0 bg-opacity-40 flex items-center justify-center">
+    <div class="text-center text-white p-4">
+      <h1 class="text-5xl font-bold font-serif">{{ project.title }}</h1>
+    </div>
+  </div>
+</section>
+
+<section class="py-16 bg-white">
+  <div class="max-w-5xl mx-auto px-4 grid md:grid-cols-3 gap-8">
+    <div class="md:col-span-2">
+      <h2 class="text-3xl font-bold text-yellow-900 mb-4">
+        Project Description
+      </h2>
+      <div class="prose lg:prose-lg prose-p:my-8 text-gray-700 leading-relaxed">
+        {{ project.full_description|linebreaks }}
+      </div>
+    </div>
+    <div class="space-y-4 text-sm">
+      <h3 class="text-xl font-bold text-yellow-900 border-b pb-2">
+        Project Details
+      </h3>
+      <div class="pt-2">
+        <h4 class="font-bold text-gray-800">Client</h4>
+        <p class="text-gray-600">{{ project.client }}</p>
+      </div>
+      <div>
+        <h4 class="font-bold text-gray-800">Location</h4>
+        <p class="text-gray-600">{{ project.location }}</p>
+      </div>
+      <div>
+        <h4 class="font-bold text-gray-800">Year</h4>
+        <p class="text-gray-600">{{ project.year }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-16">
+  <div class="max-w-7xl mx-auto px-4">
+    <h2 class="text-3xl font-bold text-yellow-900 mb-8 text-center">Gallery</h2>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+      {% for image in project.images.all %}
+      <div class="overflow-hidden rounded-lg shadow-md">
+        <img
+          src="{{ image.image.url }}"
+          alt="{{ image.caption }}"
+          class="w-full h-full object-cover"
+        />
+      </div>
+      {% empty %}
+      <p class="col-span-full text-center text-gray-500">
+        No gallery images for this project yet.
+      </p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% endblock content %}
