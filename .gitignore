@@ -1,0 +1,14 @@
+# Virtual Environment
+.venv/
+.env/
+
+# Django files
+*.pyc
+__pycache__/
+
+# IDE folders
+.vscode/
+.idea/
+
+# Secret files (if you use a .env file)
+.env
