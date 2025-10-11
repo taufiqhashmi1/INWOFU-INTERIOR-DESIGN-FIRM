@@ -1,0 +1,29 @@
+# render.yaml
+# Blueprint for deploying a Django project with SQLite on Render.
+# WARNING: This setup is for hobby projects. Data can still be lost.
+
+services:
+  # 1. The Django Web Service
+  - type: web
+    name: inwofu-django-app
+    env: python
+    pythonVersion: "3.12"
+    buildCommand: |
+      pip install -r requirements.txt
+      python manage.py tailwind build
+      python manage.py collectstatic --no-input
+      python manage.py migrate
+    startCommand: "gunicorn inwofu.wsgi"
+    # envVars:
+    #   - key: SECRET_KEY
+    #     generateValue: true
+    # Mount a persistent disk at the specified path
+    # disks:
+    #   - name: data
+    #     mountPath: /var/data
+    #     sizeGB: 1
+
+  # 2. The Static File Server
+  - type: staticsite
+    name: inwofu-static-files
+    publishDir: staticfiles
