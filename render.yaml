@@ -24,6 +24,6 @@ services:
     #     sizeGB: 1
 
   # 2. The Static File Server
-  - type: staticsite
+  - type: static site
     name: inwofu-static-files
     publishDir: staticfiles
