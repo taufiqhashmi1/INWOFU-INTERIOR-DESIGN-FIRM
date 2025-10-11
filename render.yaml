@@ -18,12 +18,13 @@ services:
     #   - key: SECRET_KEY
     #     generateValue: true
     # Mount a persistent disk at the specified path
-    # disks:
-    #   - name: data
-    #     mountPath: /var/data
-    #     sizeGB: 1
+    disks:
+      - name: data
+        mountPath: /var/data
+        sizeGB: 1
 
   # 2. The Static File Server
-  - type: static site
+  - type: web
+    runtime: static
     name: inwofu-static-files
     publishDir: staticfiles
