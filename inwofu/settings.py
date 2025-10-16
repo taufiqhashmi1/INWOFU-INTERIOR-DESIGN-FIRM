@@ -18,6 +18,7 @@ env = Env()
 Env.read_env()
 
 ENVIRONMENT = env("ENVIRONMENT", default="production")
+ENVIRONMENT = "development"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -35,7 +36,7 @@ if ENVIRONMENT == "development":
 else:
     DEBUG = False
 
-ALLOWED_HOSTS = ['inwofu.onrender.com']
+ALLOWED_HOSTS = ['inwofu.onrender.com', 'localhost', '127.0.0.1']
 
 CSRF_TRUSTED_ORIGINS = ['https://inwofu.onrender.com']
 
