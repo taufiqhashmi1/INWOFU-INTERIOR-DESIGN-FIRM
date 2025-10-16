@@ -35,7 +35,9 @@ if ENVIRONMENT == "development":
 else:
     DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['inwofu.onrender.com']
+
+CSRF_TRUSTED_ORIGINS = ['https://inwofu.onrender.com']
 
 
 # Application definition
