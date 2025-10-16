@@ -4,6 +4,17 @@ from django.utils.text import slugify
 from django.utils import timezone # Import timezone
 import uuid # Import for unique slugs
 
+# from environ import Env
+# env = Env()
+# Env.read_env()
+
+# ENVIRONMENT = env("ENVIRONMENT", default="production")
+
+# if ENVIRONMENT == "development":
+#     thumbnails_path = 'projects/thumbnails/'
+# else:
+#     thumbnails_path = env("CLOUDINARY_URL", default='thumbnails_path/')
+
 class ContactMessage(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
@@ -18,7 +29,7 @@ class Project(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, blank=True, max_length=255)
     thumbnail = models.ImageField(
-        upload_to='projects/thumbnails/', 
+        upload_to="projects/thumbnails/", 
         help_text="Image shown on the homepage carousel.", 
         blank=True, 
         null=True
